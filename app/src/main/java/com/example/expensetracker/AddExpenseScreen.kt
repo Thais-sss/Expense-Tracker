@@ -28,57 +28,69 @@ import androidx.compose.ui.graphics.Color
 @Composable
 fun AddExpenseScreen(viewModel: YourViewModel, navigateToViewExpenses: () -> Unit) {
     Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier.fillMaxSize(), // setting size for the column
+        horizontalAlignment = Alignment.CenterHorizontally // aligning column
     ) {
-        Text(
+        Text( // setting text to be displayed
             text = "Add Expense",
             modifier = Modifier.padding(16.dp)
         )
 
+        // declaring some variables
         val expenseNameState = remember { mutableStateOf("")}
+        // specifying that their value will change or at least can change
         val amountState = remember { mutableStateOf("")}
 
-        // Text fields for expense details
+        // text fields for expense details
         TextField(
+            // saving the value
             value = expenseNameState.value, // Use state to manage input
             onValueChange = { expenseNameState.value = it },
+            // label for user
             label = { Text("Expense Name") },
+            // jetpack tools to deal with input
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
         )
 
         TextField(
+            // same as above for amount now
             value = amountState.value, // Use state to manage input
             onValueChange = { amountState.value = it },
             label = { Text("Amount") },
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done)
         )
 
+        // validate user input
         var showError by remember { mutableStateOf(false) }
-        // Button to add the expense
-        // Submit Button
+
+        // button to add the expense
+        // submit Button
         Button(
             onClick = {
                 // Save the entered expense to a list, database, or ViewModel
                 val newExpense = Expense(expenseNameState.value, amountState.value)
-                // Call a function to add the expense to the list or database
-                // addExpense(newExpense)
 
+                // saving the values name and amount entered
                 val name = expenseNameState.value
                 val amount = amountState.value
 
+                // if statement to validate
                 if (name.isNotBlank() && amount.isNotBlank()) {
+                    // checking if the fields are not blank
                     val newExpense = Expense(name, amount)
+                    // if not blank, it will navigate user to the next screen
                     viewModel.addExpense(newExpense)
                     navigateToViewExpenses()
 
                     // Clear the text fields after submission
                     expenseNameState.value = ""
                     amountState.value = ""
+                    // if the fields are blank, throw error
                 } else {
                     showError = true
                 }
             },
+            // tools for design
             modifier = Modifier.padding(8.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray)
         ) {
@@ -87,23 +99,18 @@ fun AddExpenseScreen(viewModel: YourViewModel, navigateToViewExpenses: () -> Uni
         if (showError) {
             Text("Please enter both name and amount", color = Color.Red)
         }
-        // Implement button functionality here
     }
 }
 
 @Composable
 fun ViewExpenses(expenses: List<Expense>) {
-    // Display the list of expenses in a suitable format (e.g., in a LazyColumn)
+    // Display the list of expenses
     LazyColumn {
+        // rendering items of the list
         items(expenses) { expense ->
+            // printing them
             Text("Name: ${expense.name}, Amount: ${expense.amount}")
         }
     }
 }
-
-//@Preview
-//@Composable
-//fun PreviewAddExpenseScreen() {
-//    AddExpenseScreen()
-//}
 

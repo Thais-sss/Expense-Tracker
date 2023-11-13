@@ -15,6 +15,7 @@ class ViewExpensesActivity : ComponentActivity() {
 
         setContent {
             MaterialTheme {
+                // display viewExpensesScreen
                 ViewExpensesScreen(expenses = expensesList, navigateToAddExpense = { })
             }
         }

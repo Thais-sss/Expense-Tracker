@@ -20,24 +20,30 @@ import androidx.compose.ui.unit.dp
 fun WelcomeScreen(onAddExpensesClick: () -> Unit, onViewExpensesClick: () -> Unit) {
     MaterialTheme {
         Box(
+            // applying some design
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.LightGray)
                 .padding(16.dp)
         ) {
             Column(
+                // applying some design
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
+                    // adding image to welcome screen --- don't think I will keep it
                     painter = painterResource(id = R.drawable.dw),
                     contentDescription = "Digital Wallet"
                 )
 
+                // i am not entirely happy with my design at the moment
+                // so i will probably try and enhance it in the future milestones
                 Text("Welcome to Expense Tracker", style = MaterialTheme.typography.h5)
                 Spacer(modifier = Modifier.height(32.dp))
                 Button(
+                    // setting what to do if user clicks on this button
                     onClick = { onAddExpensesClick() },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -49,6 +55,7 @@ fun WelcomeScreen(onAddExpensesClick: () -> Unit, onViewExpensesClick: () -> Uni
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
+                    // setting what to do if user clicks on this button
                     onClick = { onViewExpensesClick() },
                     modifier = Modifier
                         .fillMaxWidth()

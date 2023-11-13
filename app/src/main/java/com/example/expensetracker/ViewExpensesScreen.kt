@@ -24,6 +24,7 @@ import java.time.LocalDate
 fun ViewExpensesScreen(expenses: List<Expense>,
                        navigateToAddExpense: () -> Unit
 ) {
+    // im not currently using them
     var totalDaily by remember { mutableDoubleStateOf(0.0) }
     var totalWeekly by remember { mutableDoubleStateOf(0.0) }
     var totalMonthly by remember { mutableDoubleStateOf(0.0) }
@@ -34,66 +35,39 @@ fun ViewExpensesScreen(expenses: List<Expense>,
     // totalWeekly = calculateWeeklyTotal(expenses)
     // totalMonthly = calculateMonthlyTotal(expenses)
 
+    // check that they are not blank
     val validExpenses = expenses.filter { it.name.isNotBlank() && it.amount.isNotBlank() }
 
     Button(
+        // applying desing and logic
+        // design with modifier
+        // logic with navigateTo depeding on the click
         onClick = { navigateToAddExpense() },
         modifier = Modifier.padding(8.dp)
     ) {
         Text("Add Expense")
     }
 
+    // check if there are expenses already or not
     if (validExpenses.isEmpty()) {
         Column(
+            // applying design
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // in case there are no expenses in yet
             Text("No expenses added yet", modifier = Modifier.padding(16.dp))
         }
 
     } else {
 
+        // otherwise, display them
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-//        Text("Daily Total: $totalDaily", modifier = Modifier.padding(8.dp))
-//        Text("Weekly Total: $totalWeekly", modifier = Modifier.padding(8.dp))
-//        Text("Monthly Total: $totalMonthly", modifier = Modifier.padding(8.dp))
-
-//        // Add buttons to recalculate the totals
-//        Button(
-//            onClick = {
-//                totalDaily = calculateDailyTotal(expenses)
-//            },
-//            modifier = Modifier.padding(8.dp),
-//            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Gray)
-//        ) {
-//            Text("Daily Total", color = Color.White)
-//        }
-
-//        Button(
-//            onClick = {
-//                totalWeekly = calculateWeeklyTotal(expenses)
-//            },
-//            modifier = Modifier.padding(8.dp),
-//            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Gray)
-//        ) {
-//            Text("Weekly Total", color = Color.White)
-//        }
-
-//        Button(
-//            onClick = {
-//                totalMonthly = calculateMonthlyTotal(expenses)
-//            },
-//            modifier = Modifier.padding(8.dp),
-//            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Gray)
-//        ) {
-//            Text("Monthly Total", color = Color.White)
-//        }
-
             LazyColumn {
                 items(validExpenses) { expense ->
                     Text(
@@ -105,7 +79,12 @@ fun ViewExpensesScreen(expenses: List<Expense>,
         }
     }
 }
-
+// i have not really implemented this yet
+// i thought i was going to but it got complicated
+// my code started to break so i decided to wait and see
+// if i will have the time or not
+// i might just get rid of this block below if i see that
+// i will not have enough time
 @RequiresApi(Build.VERSION_CODES.O)
 fun calculateDailyTotal(expenses: List<Expense>): Double {
     val today = LocalDate.now()

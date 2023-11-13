@@ -14,15 +14,16 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ExpenseScreen() {
     Column(
+        // elements of column being customized
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Text(
+            // text fields
             text = "Expense Tracker App",
             modifier = Modifier.padding(16.dp)
         )
-        // Additional UI elements for main functionality can be added here
     }
 }
 

@@ -9,23 +9,23 @@ import androidx.lifecycle.ViewModel
 import com.example.expensetracker.AddExpenseScreen
 import com.example.expensetracker.YourViewModel
 
-class AddExpenseActivity : ComponentActivity() {
-    private val viewModel: YourViewModel by viewModels()
+class AddExpenseActivity : ComponentActivity() { // extends ComponentActivity
+    private val viewModel: YourViewModel by viewModels() // creating view model
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) { // standard code
         super.onCreate(savedInstanceState)
-        setContent {
+        setContent { // setting content
             MaterialTheme {
                 val currentScreen = viewModel.currentScreen.value
 
-                when (currentScreen) {
-                    is Screen.AddExpense -> {
-                        AddExpenseScreen(viewModel = viewModel) {
-                            viewModel.navigateTo(Screen.ViewExpenses)
-                            finish()
+                when (currentScreen) { // a type of switch statement
+                    is Screen.AddExpense -> { // if the currentScreen is addExpense, then display its view
+                        AddExpenseScreen(viewModel = viewModel) { // passing viewModel as a parameter
+                            viewModel.navigateTo(Screen.ViewExpenses) // navigating to another screen
+                            finish() // finishing this current view
                         }
                     }
-                    else -> {
+                    else -> { // if not, display viewExpenses
                         ViewExpenses(viewModel.expenses)
                     }
                 }
