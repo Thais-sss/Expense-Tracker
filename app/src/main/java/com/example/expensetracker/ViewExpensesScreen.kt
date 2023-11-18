@@ -11,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -24,6 +25,12 @@ import java.time.LocalDate
 fun ViewExpensesScreen(expenses: List<Expense>,
                        navigateToAddExpense: () -> Unit
 ) {
+
+    var totalExpense by remember { mutableDoubleStateOf(0.0) }
+
+    totalExpense = expenses.filter { it.name.isNotBlank() && it.amount.isNotBlank() }
+        .sumByDouble { it.amount.toDouble() }
+
     // im not currently using them
     var totalDaily by remember { mutableDoubleStateOf(0.0) }
     var totalWeekly by remember { mutableDoubleStateOf(0.0) }
@@ -74,6 +81,9 @@ fun ViewExpensesScreen(expenses: List<Expense>,
                         "Name: ${expense.name}, Amount: ${expense.amount}",
                         modifier = Modifier.padding(8.dp)
                     )
+                }
+                item {
+                    Text("Total Expense: $totalExpense", modifier = Modifier.padding(16.dp))
                 }
             }
         }
