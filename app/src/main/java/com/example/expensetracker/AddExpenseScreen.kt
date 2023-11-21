@@ -1,6 +1,5 @@
 package com.example.expensetracker
 
-import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column

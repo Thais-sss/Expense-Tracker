@@ -2,18 +2,28 @@ package com.example.expensetracker
 
 import android.os.Build
 import android.os.Bundle
+import android.Manifest
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.MaterialTheme.typography
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.expensetracker.ViewExpensesScreen
-
 
 class MainActivity : ComponentActivity() {
     // setting viewModel
@@ -22,7 +32,43 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+            ),
+            0
+        )
         setContent { // setting content
+            BackgroundLocationTrackingTheme {
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Button(onClick = {
+//                        Intent(applicationContext, LocationService::class.java).apply {
+//                            action = LocationService.ACTION_START
+//                            startService(this)
+//                        }
+                        viewModel.startLocationService(applicationContext)
+                    }) {
+                        Text(text = "Start")
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Button(onClick = {
+//                        Intent(applicationContext, LocationService::class.java).apply {
+//                            action = LocationService.ACTION_STOP
+//                            startService(this)
+//                        }
+                    viewModel.startLocationService(applicationContext)
+                }) {
+                        Text(text = "Stop")
+                    }
+                }
+            }
+
+
+
             // creating instance of navController
             val navController = rememberNavController()
 
@@ -63,6 +109,14 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+
+@Composable
+fun BackgroundLocationTrackingTheme(content: @Composable () -> Unit) {
+    MaterialTheme(
+        typography = typography,
+        content = content
+    )
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
