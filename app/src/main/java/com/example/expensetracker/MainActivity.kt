@@ -3,6 +3,8 @@ package com.example.expensetracker
 import android.os.Build
 import android.os.Bundle
 import android.Manifest
+import android.content.Intent
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -46,20 +48,21 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize()
                 ) {
                     Button(onClick = {
-//                        Intent(applicationContext, LocationService::class.java).apply {
-//                            action = LocationService.ACTION_START
-//                            startService(this)
-//                        }
+                        Intent(applicationContext, LocationService::class.java).apply {
+                            action = LocationService.ACTION_START
+                            startService(this)
+                        }
                         viewModel.startLocationService(applicationContext)
+                        Log.d("THAIS KEY: Started","here")
                     }) {
                         Text(text = "Start")
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                     Button(onClick = {
-//                        Intent(applicationContext, LocationService::class.java).apply {
-//                            action = LocationService.ACTION_STOP
-//                            startService(this)
-//                        }
+                        Intent(applicationContext, LocationService::class.java).apply {
+                            action = LocationService.ACTION_STOP
+                            startService(this)
+                        }
                     viewModel.startLocationService(applicationContext)
                 }) {
                         Text(text = "Stop")

@@ -4,7 +4,9 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.location.Geocoder
 import android.os.IBinder
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.CoroutineScope
@@ -14,6 +16,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.io.IOException
 
 class LocationService: Service() {
 
@@ -53,11 +56,21 @@ class LocationService: Service() {
             .getLocationUpdates(10000L)
             .catch { e -> e.printStackTrace() }
             .onEach { location ->
-                val lat = location.latitude.toString().takeLast(3)
-                val long = location.longitude.toString().takeLast(3)
+                val lat = location.latitude.toString()
+                val long = location.longitude.toString()
+
+                val cityName = try {
+                    val geocoder = Geocoder(this)
+                    val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                    addresses?.firstOrNull()?.locality ?: "Unknown City"
+                } catch (ex: IOException) {
+                    "Unknown City"
+                }
+
                 val updateNotification = notification.setContentText(
-                    "Location: ($lat, $long)"
+                    "Location: ($lat, $long), City: $cityName"
                 )
+                Log.d("Thais KEY", "$lat, $long, City: $cityName")
                 notificationManager.notify(1, updateNotification.build())
             }
             .launchIn(serviceScope)
