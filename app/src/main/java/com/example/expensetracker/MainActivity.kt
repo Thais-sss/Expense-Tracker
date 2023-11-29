@@ -138,6 +138,7 @@ fun ExpenseTrackerApp(viewModel: YourViewModel, navController: NavController) {
 
             AddExpenseScreen(
                 viewModel = viewModel,
+                navController = navController,
                 navigateToViewExpenses = {
                     // getting the route for each specific screen
                     viewModel.addExpense(newExpense)

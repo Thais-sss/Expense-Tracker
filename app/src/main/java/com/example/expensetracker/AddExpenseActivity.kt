@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.material.MaterialTheme
+import androidx.navigation.compose.rememberNavController
 
 class AddExpenseActivity : ComponentActivity() { // extends ComponentActivity
     private val viewModel: YourViewModel by viewModels() // creating view model
@@ -17,10 +18,11 @@ class AddExpenseActivity : ComponentActivity() { // extends ComponentActivity
         setContent { // setting content
             MaterialTheme {
                 val currentScreen = viewModel.currentScreen.value
+                val navController = rememberNavController()
 
                 when (currentScreen) { // a type of switch statement
                     is Screen.AddExpense -> { // if the currentScreen is addExpense, then display its view
-                        AddExpenseScreen(viewModel = viewModel) { // passing viewModel as a parameter
+                        AddExpenseScreen(viewModel = viewModel, navController = navController) { // passing viewModel as a parameter
                             viewModel.navigateTo(Screen.ViewExpenses) // navigating to another screen
                             finish() // finishing this current view
                         }

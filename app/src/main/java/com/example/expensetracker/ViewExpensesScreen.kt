@@ -2,6 +2,7 @@ package com.example.expensetracker
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -14,6 +15,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -35,8 +38,10 @@ fun ViewExpensesScreen(expenses: List<Expense>,
         // design with modifier
         // logic with navigateTo depeding on the click
         onClick = { navigateToAddExpense() },
-        modifier = Modifier.padding(8.dp)
-    ) {
+        modifier = Modifier
+            .padding(8.dp)
+            .background(Color(0xFF1E1E1E)) // Dark background color
+                 ) {
         Text("Add Expense")
     }
 
@@ -44,7 +49,8 @@ fun ViewExpensesScreen(expenses: List<Expense>,
     if (validExpenses.isEmpty()) {
         Column(
             // applying design
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize()
+                .background(Color(0xFF1E1E1E)), // Dark background color
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -73,4 +79,22 @@ fun ViewExpensesScreen(expenses: List<Expense>,
             }
         }
     }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Preview(showBackground = true)
+@Composable
+fun ViewExpensesScreenPreview() {
+    // Sample list of expenses for preview
+    val sampleExpenses = listOf(
+        Expense("Groceries", "50.0"),
+        Expense("Utilities", "100.0"),
+        Expense("Dinner", "30.0")
+    )
+
+    // Function to navigate to add expense (not used in preview)
+    val navigateToAddExpense: () -> Unit = {}
+
+    // Previewing the ViewExpensesScreen with sample data
+    ViewExpensesScreen(expenses = sampleExpenses, navigateToAddExpense = navigateToAddExpense)
 }
