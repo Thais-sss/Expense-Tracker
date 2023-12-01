@@ -15,8 +15,12 @@ class ViewExpensesActivity : ComponentActivity() {
 
         setContent {
             MaterialTheme {
-                // display viewExpensesScreen
-                ViewExpensesScreen(expenses = expensesList, navigateToAddExpense = { })
+                // Display viewExpensesScreen
+                ViewExpensesScreen(
+                    expenses = expensesList,
+                    navigateToAddExpense = { /* Your navigation logic */ },
+                    onDeleteClick = YourViewModel.instance::deleteExpense
+                )
             }
         }
     }

@@ -61,7 +61,7 @@ dependencies {
     implementation("androidx.compose.material3:material3")
 
     implementation("androidx.test.espresso:espresso-core:3.5.1")
-
+    implementation("androidx.compose.foundation:foundation-layout-android:1.5.4")
 
     //Added
     implementation("androidx.compose.foundation:foundation:1.5.4")
@@ -71,7 +71,9 @@ dependencies {
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.5")
     implementation("androidx.navigation:navigation-compose:2.7.5")
 
-//    implementation("androidx.compose.material:material-icons-extended:$compose_ui_version")
+    //implementation("io.coil-kt:coil-compose:1.4.0")
+    //implementation("com.google.accompanist:accompanist-pager:0.24.0")
+
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

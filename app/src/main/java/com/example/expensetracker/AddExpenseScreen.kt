@@ -59,13 +59,15 @@ fun IconButton(
 ) {
     androidx.compose.material3.IconButton(
         onClick = onClick,
-        modifier = modifier,
+        modifier = modifier
+            .background(Color(0xFF03DAC6), RoundedCornerShape(50)),
         enabled = enabled,
         content = {
             content()
         }
     )
 }
+
 
 
 @Composable
@@ -246,7 +248,7 @@ fun AddExpenseScreen(viewModel: YourViewModel, navController: NavController, nav
                     },
                     modifier = Modifier
                         .size(56.dp)
-                        .background(Color(0xFF03DAC6), RoundedCornerShape(10.dp))
+                        .background(color = Color(0xFF03DAC6), shape = RoundedCornerShape(10.dp))
                 ) {
                     Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "View Expenses")
                 }

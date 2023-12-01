@@ -69,9 +69,6 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
-
-
-
             // creating instance of navController
             val navController = rememberNavController()
 
@@ -104,8 +101,11 @@ class MainActivity : ComponentActivity() {
                         expenses = viewModel.expenses,
                         navigateToAddExpense = {
                             viewModel.navigateTo(Screen.AddExpense)
-                            // defining which screen to navigate to
                             navController.navigate(Screen.AddExpense.route)
+                        },
+                        onDeleteClick = { expense ->
+                            // Handle the delete action here
+                            viewModel.deleteExpense(expense)
                         }
                     )
                 }
@@ -149,11 +149,16 @@ fun ExpenseTrackerApp(viewModel: YourViewModel, navController: NavController) {
         }
         // displaying appropriate screen
         Screen.ViewExpenses -> {
-            ViewExpensesScreen(expenses = expenses,
+            ViewExpensesScreen(
+                expenses = expenses,
                 navigateToAddExpense = {
                     // getting the route for each specific screen
                     viewModel.navigateTo(Screen.AddExpense)
                     navController.navigate(Screen.AddExpense.route)
+                },
+                onDeleteClick = { expense ->
+                    // Handle the delete action here
+                    viewModel.deleteExpense(expense)
                 }
             )
         }

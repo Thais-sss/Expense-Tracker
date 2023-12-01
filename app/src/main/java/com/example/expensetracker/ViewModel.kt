@@ -5,6 +5,8 @@ import android.content.Intent
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 sealed class Screen(val route: String) {
     // sealed class represents a hierarchy
@@ -15,6 +17,10 @@ sealed class Screen(val route: String) {
 class YourViewModel : ViewModel() { // viewModel inheritance
     val expenses = mutableStateListOf<Expense>() // whenever it gets changed, it will trigger recomposition
     val currentScreen = mutableStateOf<Screen>(Screen.AddExpense) // same for currentScreen
+
+    companion object {
+        val instance by lazy { YourViewModel() }
+    }
 
     fun navigateTo(screen: Screen) { // method to navigate through screens
         currentScreen.value = screen // by getting the value for the currentScreen.
@@ -28,6 +34,12 @@ class YourViewModel : ViewModel() { // viewModel inheritance
         Intent(context, LocationService::class.java).apply {
             action = LocationService.ACTION_START
             context.startService(this)
+        }
+    }
+
+    fun deleteExpense(expense: Expense) {
+        viewModelScope.launch {
+            expenses.remove(expense)
         }
     }
 }
