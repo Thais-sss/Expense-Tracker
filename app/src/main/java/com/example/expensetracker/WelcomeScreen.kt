@@ -42,7 +42,6 @@ fun WelcomeScreen(onAddExpensesClick: () -> Unit, onViewExpensesClick: () -> Uni
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
-                    .align(Alignment.TopCenter) // Align to the top center of the screen
             )
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -57,21 +56,16 @@ fun WelcomeScreen(onAddExpensesClick: () -> Unit, onViewExpensesClick: () -> Uni
                         .height(300.dp) // Adjust the height as needed
                         .clip(RoundedCornerShape(16.dp)) // Apply rounded corners
                 )
-
-                Text("Welcome to Expense Tracker", style = MaterialTheme.typography.h5)
-                Spacer(modifier = Modifier.height(32.dp))
                 ButtonWithIcon(
                     onClick = { onAddExpensesClick() },
                     icon = "plus",
                     buttonText = "Add Expenses"
                 )
-                Spacer(modifier = Modifier.height(35.dp))
                 ButtonWithIcon(
                     onClick = { onViewExpensesClick() },
                     icon = "plus", // Replace with the actual eye icon resource ID
                     buttonText = "View Expenses"
                 )
-                Spacer(modifier = Modifier.height(3.dp))
             }
         }
     }
@@ -105,6 +99,8 @@ fun ButtonWithIcon(
                             .size(32.dp)
                             .padding(end = 12.dp)
                     )
+                    //pacer(modifier = Modifier.width(8.dp))
+
                 } else if (it is ImageVector) {
                     Icon(
                         imageVector = it,
@@ -113,9 +109,9 @@ fun ButtonWithIcon(
                             .size(32.dp)
                             .padding(end = 12.dp)
                     )
+                    //Spacer(modifier = Modifier.height(35.dp)) // Adjust the spacing here
                 } else if (it is String && it == "plus") {
                     Text("+", color = Color.Black, fontSize = 32.sp, fontWeight = FontWeight.Bold)
-                    Spacer(modifier = Modifier.width(8.dp))
                 }
             }
             Text(buttonText, color = Color.Black, fontSize = 22.sp)

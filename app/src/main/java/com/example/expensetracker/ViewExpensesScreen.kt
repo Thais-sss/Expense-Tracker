@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -29,9 +30,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.ui.res.painterResource
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -112,14 +110,14 @@ fun ViewExpensesScreen(
                         }
                         Text("Amount: ${expense.amount}", modifier = Modifier.padding(8.dp))
                         // Add delete icon with click listener
-                        IconButton(
-                            onClick = { onDeleteClick(expense) },
+                        Image(
+                            painter = painterResource(id = R.drawable.dele), // Replace with your custom image
+                            contentDescription = "Delete Expense",
                             modifier = Modifier
                                 .size(24.dp)
-                                .padding(8.dp),
-                        ) {
-                            Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete Icon")
-                        }
+                                .padding(8.dp)
+                                .clickable { onDeleteClick(expense) } // Add click listener
+                        )
                     }
                 }
 
