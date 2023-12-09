@@ -9,24 +9,27 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
 fun WelcomeScreen(onAddExpensesClick: () -> Unit, onViewExpensesClick: () -> Unit) {
+    val shadowOffset = Offset(x= 8f, y=11f)
+    val shadowColor = Color.White
     MaterialTheme{
         Box(
             modifier = Modifier
@@ -36,12 +39,14 @@ fun WelcomeScreen(onAddExpensesClick: () -> Unit, onViewExpensesClick: () -> Uni
         ) {
             // Centralized and styled welcome text
             Text(
-                text = "Welcome",
+                text = "Welcome!",
                 color = Color(0xFF03DAC6),
-                style = MaterialTheme.typography.h3, // Use h3 for a larger font
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
+                style = TextStyle(
+                    fontSize = 70.sp,
+                    fontStyle = FontStyle.Normal,
+                    textAlign = TextAlign.Center, // Center the text
+                    shadow = Shadow(shadowColor, shadowOffset, 2f)// Use h3 for a larger font
+                )
             )
             Column(
                 modifier = Modifier.fillMaxSize(),

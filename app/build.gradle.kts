@@ -68,6 +68,9 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-firestore:24.0.0") // Use the latest version
 
+    implementation("com.google.accompanist:accompanist-insets:0.23.1")
+    implementation("com.google.android.exoplayer:exoplayer-core:2.19.1")
+    implementation("com.google.android.exoplayer:exoplayer-ui:2.19.1")
 
     //Added
     implementation("androidx.compose.foundation:foundation:1.5.4")
