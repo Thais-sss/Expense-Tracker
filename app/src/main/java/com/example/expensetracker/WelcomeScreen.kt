@@ -61,16 +61,19 @@ fun WelcomeScreen(onAddExpensesClick: () -> Unit, onViewExpensesClick: () -> Uni
                         .height(300.dp) // Adjust the height as needed
                         .clip(RoundedCornerShape(16.dp)) // Apply rounded corners
                 )
+                Spacer(modifier = Modifier.height(45.dp)) // Add a vertical space between the image and the button
                 ButtonWithIcon(
                     onClick = { onAddExpensesClick() },
-                    icon = "plus",
+                    icon = "add",
                     buttonText = "Add Expenses"
                 )
+                Spacer(modifier = Modifier.height(30.dp)) // Add a vertical space between the buttons
                 ButtonWithIcon(
                     onClick = { onViewExpensesClick() },
-                    icon = "plus", // Replace with the actual eye icon resource ID
+                    icon = "eye", // Replace with the actual eye icon resource ID
                     buttonText = "View Expenses"
                 )
+                //Spacer(modifier = Modifier.height(5.dp)) // Add a vertical space between the buttons
             }
         }
     }
@@ -106,17 +109,25 @@ fun ButtonWithIcon(
                     )
                     //pacer(modifier = Modifier.width(8.dp))
 
-                } else if (it is ImageVector) {
-                    Icon(
-                        imageVector = it,
+                } else if (it is String && it == "add") {
+                    // Replace "add" with the actual name of your image in the drawable folder
+                    Image(
+                        painter = painterResource(id = R.drawable.add),
                         contentDescription = null,
                         modifier = Modifier
-                            .size(32.dp)
+                            .size(50.dp)
                             .padding(end = 12.dp)
                     )
                     //Spacer(modifier = Modifier.height(35.dp)) // Adjust the spacing here
-                } else if (it is String && it == "plus") {
-                    Text("+", color = Color.Black, fontSize = 32.sp, fontWeight = FontWeight.Bold)
+                } else if (it is String && it == "eye") {
+                    // Replace "eye" with the actual name of your image in the drawable folder
+                    Image(
+                        painter = painterResource(id = R.drawable.eye),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(40.dp)
+                            .padding(end = 12.dp)
+                    )
                 }
             }
             Text(buttonText, color = Color.Black, fontSize = 22.sp)

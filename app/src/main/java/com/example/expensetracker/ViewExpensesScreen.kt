@@ -114,7 +114,7 @@ fun ViewExpensesScreen(
                             painter = painterResource(id = R.drawable.dele), // Replace with your custom image
                             contentDescription = "Delete Expense",
                             modifier = Modifier
-                                .size(24.dp)
+                                .size(45.dp)
                                 .padding(8.dp)
                                 .clickable { onDeleteClick(expense) } // Add click listener
                         )
