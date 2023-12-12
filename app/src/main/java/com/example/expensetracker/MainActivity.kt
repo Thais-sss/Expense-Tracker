@@ -49,33 +49,18 @@ class MainActivity : ComponentActivity() {
             ),
             0
         )
-        setContent { // setting content
-            BackgroundLocationTrackingTheme {
-                Column(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Button(onClick = {
-                        Intent(applicationContext, LocationService::class.java).apply {
-                            action = LocationService.ACTION_START
-                            startService(this)
-                        }
-                        viewModel.startLocationService(applicationContext)
+
+        // Start the LocationService
+        Intent(applicationContext, LocationService::class.java).apply {
+            action = LocationService.ACTION_START
+            startService(this)
+        }
+        viewModel.startLocationService(applicationContext)
                         Log.d("THAIS KEY: Started","here")
-                    }) {
-                        Text(text = "Start")
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Button(onClick = {
-                        Intent(applicationContext, LocationService::class.java).apply {
-                            action = LocationService.ACTION_STOP
-                            startService(this)
-                        }
-                    viewModel.startLocationService(applicationContext)
-                }) {
-                        Text(text = "Stop")
-                    }
-                }
-            }
+
+
+        setContent { // setting content
+
             // creating instance of navController
             val navController = rememberNavController()
 

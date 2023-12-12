@@ -30,6 +30,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.res.painterResource
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -40,11 +42,19 @@ fun ViewExpensesScreen(
     onDeleteClick: (Expense) -> Unit // Add this parameter for delete action
 ) {
     var totalExpense by remember { mutableDoubleStateOf(0.0) }
+    var cityName by remember { mutableStateOf("Unknown City") }
 
     totalExpense = expenses.filter { it.name.isNotBlank() && it.amount.isNotBlank() }
         .sumByDouble { it.amount.toDouble() }
 
     val validExpenses = expenses.filter { it.name.isNotBlank() && it.amount.isNotBlank() }
+
+    // Get the city name from the location service
+    LocationService.currentCityFlow.collectAsState().value?.let { cityNameValue ->
+        cityName = cityNameValue
+    }
+
+
 
     MaterialTheme(
         colors = darkColors(
@@ -68,6 +78,8 @@ fun ViewExpensesScreen(
                 ) {
                     Text("Add Expense")
                 }
+                Spacer(modifier = Modifier.height(8.dp))
+                Text("City: $cityName", color = Color.White)
             }
 
             if (validExpenses.isEmpty()) {
@@ -140,21 +152,21 @@ fun ViewExpensesScreen(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
-@Preview(showBackground = true)
-@Composable
-fun ViewExpensesScreenPreview() {
-    // Sample list of expenses for preview
-    val sampleExpenses = listOf(
-        Expense("Groceries", "50.0"),
-        Expense("Utilities", "100.0"),
-        Expense("Dinner", "30.0")
-    )
-    // Function to navigate to add expense (not used in preview)
-    val navigateToAddExpense: () -> Unit = {}
-    // Function to handle delete action (not used in preview)
-    val onDeleteClick: (Expense) -> Unit = { /* Handle delete action */ }
-    // Previewing the ViewExpensesScreen with sample data
-    ViewExpensesScreen(expenses = sampleExpenses, navigateToAddExpense = navigateToAddExpense, onDeleteClick = onDeleteClick)
-}
+//@RequiresApi(Build.VERSION_CODES.O)
+//@Preview(showBackground = true)
+//@Composable
+//fun ViewExpensesScreenPreview() {
+//    // Sample list of expenses for preview
+//    val sampleExpenses = listOf(
+//        Expense("Groceries", "50.0"),
+//        Expense("Utilities", "100.0"),
+//        Expense("Dinner", "30.0")
+//    )
+//    // Function to navigate to add expense (not used in preview)
+//    val navigateToAddExpense: () -> Unit = {}
+//    // Function to handle delete action (not used in preview)
+//    val onDeleteClick: (Expense) -> Unit = { /* Handle delete action */ }
+//    // Previewing the ViewExpensesScreen with sample data
+//    ViewExpensesScreen(expenses = sampleExpenses, navigateToAddExpense = navigateToAddExpense, onDeleteClick = onDeleteClick)
+//}
 
