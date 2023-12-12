@@ -56,7 +56,7 @@ fun AddExpenseScreen(viewModel: YourViewModel, navController: NavController, nav
             BoxWithConstraints(
                 modifier = Modifier
                     .height(350.dp)
-                    //.weight(1f) // Take up the remaining available space
+                //.weight(1f) // Take up the remaining available space
             ) {
                 val gradientHeight = maxHeight
 
@@ -85,63 +85,66 @@ fun AddExpenseScreen(viewModel: YourViewModel, navController: NavController, nav
                     )
                 }
             }
+            var showError by remember { mutableStateOf(false) }
 
             // declaring some variables
-                val expenseNameState = remember { mutableStateOf("") }
-                // specifying that their value will change or at least can change
-                val amountState = remember { mutableStateOf("") }
+            val expenseNameState = remember { mutableStateOf("") }
+            // specifying that their value will change or at least can change
+            val amountState = remember { mutableStateOf("") }
 
-                val myColor = Color(0xFF03DAC6)
-                // text fields for expense details
-                Text(
-                    text = "Expense Name", // Your label text
-                    color = Color.White, // Adjust label text color
-                    modifier = Modifier.padding(8.dp)
-                )
-                TextField(
-                    // saving the value
-                    value = expenseNameState.value, // Use state to manage input
-                    onValueChange = { expenseNameState.value = it },
-                    textStyle = TextStyle(
-                        color = Color.White, // Set text color to white
-                        fontSize = 16.sp // Adjust font size as needed
-                    ),
-                    modifier = Modifier
+            val myColor = Color(0xFF03DAC6)
+            // text fields for expense details
+            Text(
+                text = "Expense Name", // Your label text
+                color = Color.White, // Adjust label text color
+                modifier = Modifier.padding(8.dp)
+            )
+            TextField(
+                // saving the value
+                value = expenseNameState.value, // Use state to manage input
+                onValueChange = { expenseNameState.value = it },
+                textStyle = TextStyle(
+                    color = Color.White, // Set text color to white
+                    fontSize = 16.sp // Adjust font size as needed
+                ),
+                modifier = Modifier
                     .border(
                         border = BorderStroke(
                             brush =
-                                Brush.linearGradient(listOf(Color.Red, Color(0xFF03DAC6))),
+                            Brush.linearGradient(listOf(Color.Red, Color(0xFF03DAC6))),
                             width = 2.dp,
                         ),
                         shape = CutCornerShape(12.dp)
                     )
-                )
+            )
 
-                Text(
-                    text = "Amount", // Your label text
-                    color = Color.White, // Adjust label text color
-                    modifier = Modifier.padding(8.dp)
-                )
-                TextField(
-                    // saving the value
-                    value = amountState.value, // Use state to manage input
-                    onValueChange = { amountState.value = it },
-                    textStyle = TextStyle(
-                        color = Color.White, // Set text color to white
-                        fontSize = 16.sp // Adjust font size as needed
-                    ),
-                    modifier = Modifier
-                        .border(
-                            border = BorderStroke(
-                                brush =
-                                Brush.linearGradient(listOf(Color.Red, Color(0xFF03DAC6))),
-                                width = 2.dp,
-                            ),
-                            shape = CutCornerShape(12.dp)
-                        )
-                        .padding(4.dp)
-                )
-
+            Text(
+                text = "Amount", // Your label text
+                color = Color.White, // Adjust label text color
+                modifier = Modifier.padding(8.dp)
+            )
+            TextField(
+                // saving the value
+                value = amountState.value, // Use state to manage input
+                onValueChange = { amountState.value = it },
+                textStyle = TextStyle(
+                    color = Color.White, // Set text color to white
+                    fontSize = 16.sp // Adjust font size as needed
+                ),
+                modifier = Modifier
+                    .border(
+                        border = BorderStroke(
+                            brush =
+                            Brush.linearGradient(listOf(Color.Red, Color(0xFF03DAC6))),
+                            width = 2.dp,
+                        ),
+                        shape = CutCornerShape(12.dp)
+                    )
+                    .padding(4.dp)
+            )
+            if (showError) {
+                Text("Please enter both name and amount", color = Color.Red)
+            }
             // Submit Button
             GradientButton(
                 text = "Submit",
@@ -157,6 +160,7 @@ fun AddExpenseScreen(viewModel: YourViewModel, navController: NavController, nav
                         expenseNameState.value = ""
                         amountState.value = ""
                     } else {
+                        showError = true
                         // Show error or handle as needed
                     }
                 },
@@ -165,14 +169,11 @@ fun AddExpenseScreen(viewModel: YourViewModel, navController: NavController, nav
                     .padding(8.dp)
             )
 
-
-                // validate user input
-                var showError by remember { mutableStateOf(false) }
-                // button to add the expense
-
-            }
+            // validate user input
+            // button to add the expense
         }
-        }
+    }
+}
 
 
 @Composable
