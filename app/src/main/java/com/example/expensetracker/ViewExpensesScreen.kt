@@ -1,5 +1,9 @@
+// name of the package
 package com.example.expensetracker
 
+// necessary imports like composable
+// lazy column, material theme, button, text
+// mutable state of and so on
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateContentSize
@@ -21,7 +25,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,108 +37,145 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.res.painterResource
 
+// declaring ViewExpensesScreen composable function
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ViewExpensesScreen(
+    // passing expenses, navigate to add expense and on delete click
     expenses: List<Expense>,
     navigateToAddExpense: () -> Unit,
-    onDeleteClick: (Expense) -> Unit // Add this parameter for delete action
+    onDeleteClick: (Expense) -> Unit
 ) {
+    // declaring variables for totalexpense when they are added together
     var totalExpense by remember { mutableDoubleStateOf(0.0) }
+    // declaring variable for city name
     var cityName by remember { mutableStateOf("Unknown City") }
 
+    // first validating and checking that name and amount are both not blank
     totalExpense = expenses.filter { it.name.isNotBlank() && it.amount.isNotBlank() }
+        // casting amount to double
         .sumByDouble { it.amount.toDouble() }
 
+    // variable to validate expenses
     val validExpenses = expenses.filter { it.name.isNotBlank() && it.amount.isNotBlank() }
 
     // Get the city name from the location service
     LocationService.currentCityFlow.collectAsState().value?.let { cityNameValue ->
+        // storing the value in city name
         cityName = cityNameValue
     }
 
-
-
+    // using material theme to apply style
     MaterialTheme(
+        // using a dark background
         colors = darkColors(
+            // setting color of background text to be teal
             primary = Color(0xFF03DAC6),
             onPrimary = Color.Black
         )
     ) {
+        // defining lazy column
         LazyColumn(
             modifier = Modifier
+                // taking up max size
                 .fillMaxSize()
                 .background(Color.Black)
+                // setting background to dark
                 .padding(16.dp)
         ) {
             item {
                 Button(
+                    // adding a button that will navigate to the add expense screen
                     onClick = { navigateToAddExpense() },
                     modifier = Modifier
+                        // customizing it
                         .fillMaxWidth()
                         .padding(8.dp)
                         .background(Color(0xFF03DAC6), shape = RoundedCornerShape(10.dp))
                 ) {
+                    // adding the text to the button
                     Text("Add Expense")
                 }
+                // adding a space
                 Spacer(modifier = Modifier.height(8.dp))
+                // printing the city name
+                // to check that location is working
                 Text("City: $cityName", color = Color.White)
             }
 
+            // checking if expenses list is empty or not
             if (validExpenses.isEmpty()) {
                 item {
                     Column(
+                        // if valid expenses is empty, this column will be rendered
                         modifier = Modifier
+                            // style
                             .fillMaxSize()
                             .verticalScroll(rememberScrollState()),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        // this message will be displayed
                         Text("No expenses added yet", modifier = Modifier.padding(16.dp), color = Color.White)
                     }
                 }
             } else {
+                // if expense list is not empty, then this column below will be rendered
                 items(validExpenses) { expense ->
                     Column(
+                        // adding style to it
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(8.dp)
                             .background(
+                                // using teal color
                                 Color(0xFF03DAC6),
+                                // giving shape to it
                                 shape = RoundedCornerShape(10.dp)
                             )
                             .animateContentSize()
                     ) {
                         Row(
+                            // using modifier to add style
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Image(
+                                // displaying icon from drawable
                                 painter = painterResource(id = R.drawable.cartt),
+                                // giving a description to the icon
                                 contentDescription = "Expense Icon",
                                 modifier = Modifier.size(24.dp)
                             )
+                            // adding a space
                             Spacer(modifier = Modifier.width(8.dp))
+                            // displaying expense name
                             Text("Name: ${expense.name}", modifier = Modifier.padding(8.dp))
                         }
+                        // displaying expense amount
                         Text("Amount: ${expense.amount}", modifier = Modifier.padding(8.dp))
                         // Add delete icon with click listener
                         Image(
-                            painter = painterResource(id = R.drawable.dele), // Replace with your custom image
+                            painter = painterResource(id = R.drawable.dele),
+                            // giving a description to the icon
                             contentDescription = "Delete Expense",
+                            // adding style
                             modifier = Modifier
                                 .size(45.dp)
                                 .padding(8.dp)
-                                .clickable { onDeleteClick(expense) } // Add click listener
+                                // calling the ondeleteclick and passing expense
+                                .clickable { onDeleteClick(expense) }
                         )
                     }
                 }
 
                 item {
                     Box(
+                        // box that will display the total expense
                         modifier = Modifier
+                            // adding style to it
                             .fillMaxWidth()
                             .padding(8.dp)
                             .background(
@@ -144,6 +184,7 @@ fun ViewExpensesScreen(
                             )
                             .animateContentSize()
                     ) {
+                        // displaying text
                         Text("Total Expense: $totalExpense", modifier = Modifier.padding(16.dp))
                     }
                 }
@@ -151,22 +192,4 @@ fun ViewExpensesScreen(
         }
     }
 }
-
-//@RequiresApi(Build.VERSION_CODES.O)
-//@Preview(showBackground = true)
-//@Composable
-//fun ViewExpensesScreenPreview() {
-//    // Sample list of expenses for preview
-//    val sampleExpenses = listOf(
-//        Expense("Groceries", "50.0"),
-//        Expense("Utilities", "100.0"),
-//        Expense("Dinner", "30.0")
-//    )
-//    // Function to navigate to add expense (not used in preview)
-//    val navigateToAddExpense: () -> Unit = {}
-//    // Function to handle delete action (not used in preview)
-//    val onDeleteClick: (Expense) -> Unit = { /* Handle delete action */ }
-//    // Previewing the ViewExpensesScreen with sample data
-//    ViewExpensesScreen(expenses = sampleExpenses, navigateToAddExpense = navigateToAddExpense, onDeleteClick = onDeleteClick)
-//}
 

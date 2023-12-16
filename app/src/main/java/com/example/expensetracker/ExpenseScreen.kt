@@ -1,5 +1,7 @@
+// package name
 package com.example.expensetracker
 
+// import android and compose libraries
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
@@ -13,8 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+// it requires a minimum api
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
+// it takes viewModel as a parameter
 fun ExpenseScreen(viewModel: YourViewModel = YourViewModel.instance) {
     Column(
         // elements of column being customized
@@ -43,6 +47,10 @@ fun ExpenseScreen(viewModel: YourViewModel = YourViewModel.instance) {
     }
 }
 
+// composable function that helps previewing the UI in android studio
+// very useful tool
+// it saved me a lot of time so i dint have to be running the app
+// every time i changed something in the ui aspect
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable

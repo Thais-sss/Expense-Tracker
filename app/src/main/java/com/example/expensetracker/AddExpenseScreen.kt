@@ -45,7 +45,13 @@ import androidx.navigation.compose.rememberNavController
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AddExpenseScreen(viewModel: YourViewModel, navController: NavController, navigateToViewExpenses: () -> Unit) {
+    // this composable function will render the UI for the AddExpenseScreen
+    // it takes YourViewModel and navigateToViewExpenses as parameters
     MaterialTheme {
+        // setting up a vertical column
+        // added some design here
+        // such as background as black
+        // allows it to take up all available space
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -54,6 +60,8 @@ fun AddExpenseScreen(viewModel: YourViewModel, navController: NavController, nav
             verticalArrangement = Arrangement.Center // Center the children vertically
         ) {
             BoxWithConstraints(
+                // used BoxWithConstraints in order to avail of the Transparent feature
+                // to create that transition in my picture
                 modifier = Modifier
                     .height(350.dp)
                 //.weight(1f) // Take up the remaining available space
@@ -71,12 +79,14 @@ fun AddExpenseScreen(viewModel: YourViewModel, navController: NavController, nav
                         modifier = Modifier.fillMaxSize()
                     )
                     Spacer(
+                        // block of code used to style image
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(gradientHeight)
                             .background(
                                 Brush.verticalGradient(
                                     colorStops = arrayOf(
+                                        // give the effect of transparency to the image
                                         Pair(0.4f, Transparent),
                                         Pair(1f, White)
                                     )
@@ -85,6 +95,7 @@ fun AddExpenseScreen(viewModel: YourViewModel, navController: NavController, nav
                     )
                 }
             }
+            // creating variable to store if the fields are filled or empty
             var showError by remember { mutableStateOf(false) }
 
             // declaring some variables
@@ -109,6 +120,8 @@ fun AddExpenseScreen(viewModel: YourViewModel, navController: NavController, nav
                 ),
                 modifier = Modifier
                     .border(
+                        // setting design for fields
+                        // gradient for the border of the fields
                         border = BorderStroke(
                             brush =
                             Brush.linearGradient(listOf(Color.Red, Color(0xFF03DAC6))),
@@ -119,8 +132,8 @@ fun AddExpenseScreen(viewModel: YourViewModel, navController: NavController, nav
             )
 
             Text(
-                text = "Amount", // Your label text
-                color = Color.White, // Adjust label text color
+                text = "Amount", // my label text
+                color = Color.White, // adjust label text color
                 modifier = Modifier.padding(8.dp)
             )
             TextField(
@@ -142,11 +155,15 @@ fun AddExpenseScreen(viewModel: YourViewModel, navController: NavController, nav
                     )
                     .padding(4.dp)
             )
+            // checking the variable error to see if it is true or not
+            // if it true, to display an error message asking user to input
+            // expense name and expense amount
             if (showError) {
                 Text("Please enter both name and amount", color = Color.Red)
             }
             // Submit Button
-            GradientButton(
+            GradientButton( // design used to have colors in a gradient
+                // around the button
                 text = "Submit",
                 onClick = {
                     val name = expenseNameState.value
@@ -168,9 +185,6 @@ fun AddExpenseScreen(viewModel: YourViewModel, navController: NavController, nav
                     .fillMaxWidth(8.0f)
                     .padding(8.dp)
             )
-
-            // validate user input
-            // button to add the expense
         }
     }
 }
@@ -198,9 +212,11 @@ fun GradientButton(
 ) {
     val gradient = Brush.horizontalGradient(listOf(Color.Red, Color(0xFF03DAC6)))
 
+    // button with the onClick feature
     Button(
         onClick = onClick,
         modifier = modifier
+            // styling the button
             .background(gradient)
             .border(
                 border = BorderStroke(width = 8.dp, brush = Brush.linearGradient(listOf(Color.Red, Color(0xFF03DAC6)))),
@@ -208,15 +224,21 @@ fun GradientButton(
             )
             .padding(4.dp),
     ) {
+        // passing the text and its colour
+        // i wnet for white in most cases as i am using a dark background
         Text(text = text, color = Color.White)
     }
 }
 
+// preview was a function showed to us in class
+// it really helped to check the ui and some changes live
+// instead of running the application every time
+// a very handy function used a lot while trying to implement some ui
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 fun AddExpenseScreenPreview() {
-    val viewModel = YourViewModel() // Replace with the actual initialization of your ViewModel
+    val viewModel = YourViewModel()
     val navController = rememberNavController()
     AddExpenseScreen(viewModel = viewModel, navController = navController) {}
 }

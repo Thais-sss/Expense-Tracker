@@ -17,9 +17,12 @@ class AddExpenseActivity : ComponentActivity() { // extends ComponentActivity
         super.onCreate(savedInstanceState)
         setContent { // setting content
             MaterialTheme {
+                // storing the value of the currentScreen
                 val currentScreen = viewModel.currentScreen.value
+                // navController is used for navigation by calling the rememberNavController function
                 val navController = rememberNavController()
 
+                // checking what the current screen is
                 when (currentScreen) { // a type of switch statement
                     is Screen.AddExpense -> { // if the currentScreen is addExpense, then display its view
                         AddExpenseScreen(viewModel = viewModel, navController = navController) { // passing viewModel as a parameter
